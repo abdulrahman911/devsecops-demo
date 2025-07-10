@@ -2,13 +2,16 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: tic-tac-toe-ingress
+  namespace: default
   annotations:
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
     # Add additional annotations as needed for your specific ingress controller
     # nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: gaming.abdulrahmanuk.com  # Replace with your actual domain
+  - host: gaming.abdulrahmanuk.com # Replace with your actual domain
     http:
       paths:
       - path: /
