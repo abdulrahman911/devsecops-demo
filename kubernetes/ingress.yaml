@@ -2,7 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: tic-tac-toe-ingress
-  namespace: default
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt
@@ -12,9 +11,9 @@ metadata:
     # nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   tls:
-    - hosts:
-        - gaming.abdulrahmanuk.com
-      secretName: tls-secret  # ✅ Cert-manager will create this secret in default namespace
+  - hosts:
+    - gaming.abdulrahmanuk.com
+    secretName: tls-secret # ✅ Cert-manager will create this secret in default namespace
   rules:
   - host: gaming.abdulrahmanuk.com # Replace with your actual domain
     http:
@@ -24,6 +23,13 @@ spec:
         backend:
           service:
             name: tic-tac-toe
+            port:
+              number: 80
+      - path: /myaks
+        pathType: Prefix
+        backend:
+          service:
+            name: aks-helloworld-one
             port:
               number: 80
   # Uncomment and configure if you want TLS
